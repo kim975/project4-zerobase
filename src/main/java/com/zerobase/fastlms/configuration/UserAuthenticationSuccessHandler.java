@@ -1,6 +1,9 @@
 package com.zerobase.fastlms.configuration;
 
+import com.zerobase.fastlms.history.dto.LoginHistoryInput;
+import com.zerobase.fastlms.history.service.LoginHistoryService;
 import com.zerobase.fastlms.member.service.MemberService;
+import com.zerobase.fastlms.util.RequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +18,7 @@ import java.io.IOException;
 public class UserAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final MemberService memberService;
+    private final LoginHistoryService loginHistoryService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -22,8 +26,19 @@ public class UserAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         UserDetails userDetails = (UserDetails) principal;
 
         String userId = userDetails.getUsername();
+        String userAgent = RequestUtils.getUserAgent(request);
+        String clientIp = RequestUtils.getClientIp(request);
 
         memberService.updateLastLoginDt(userId);
+
+        loginHistoryService.addLoginHistory(
+                LoginHistoryInput.builder()
+                        .userId(userId)
+                        .userAgent(userAgent)
+                        .clientIp(clientIp)
+                        .build()
+        );
+
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
