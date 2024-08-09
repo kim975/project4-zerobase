@@ -103,7 +103,32 @@
 
 
     </div>
-
+    <div class="list" >
+        <table>
+            <thead>
+            <tr>
+                <th>NO</th>
+                <th>
+                    로그인 일자
+                </th>
+                <th>
+                    접속 IP
+                </th>
+                <th>
+                    접속 UserAgent
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="x, stat : ${loginHistoryList}">
+                <td th:text="${loginHistoryList.size() - stat.index}">1</td>
+                <td th:text="${x.loginDt}">홍길동</td>
+                <td th:text="${x.clientIp}">010-1111-2222</td>
+                <td th:text="${x.userAgent}">010-1111-2222</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>

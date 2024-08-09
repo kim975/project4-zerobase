@@ -27,7 +27,7 @@ public class LoginHistoryImpl implements LoginHistoryService {
 
     @Override
     public List<LoginHistoryOutput> searchLoginHistory(String userId) {
-        List<LoginHistory> loginHistoryList = loginHistoryRepository.findAllByUserId(userId);
+        List<LoginHistory> loginHistoryList = loginHistoryRepository.findAllByUserIdOrderByLoginDtDesc(userId);
 
         return loginHistoryList.stream()
                 .map(LoginHistoryOutput::fromEntity)

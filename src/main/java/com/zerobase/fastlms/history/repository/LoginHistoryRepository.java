@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LoginHistoryRepository extends JpaRepository<LoginHistory, Long> {
-    List<LoginHistory> findAllByUserId(String userId);
+    List<LoginHistory> findAllByUserIdOrderByLoginDtDesc(String userId);
 }
