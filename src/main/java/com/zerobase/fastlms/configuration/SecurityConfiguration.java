@@ -30,7 +30,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     UserAuthenticationFailureHandler getFailureHandler() {
         return new UserAuthenticationFailureHandler();
     }
-    
+
+    @Bean
+    UserAuthenticationSuccessHandler getSuccessHandler() {
+        return new UserAuthenticationSuccessHandler(memberService);
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/favicon.ico", "/files/**");
@@ -59,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/member/login")
+                .successHandler(getSuccessHandler())
                 .failureHandler(getFailureHandler())
                 .permitAll();
 

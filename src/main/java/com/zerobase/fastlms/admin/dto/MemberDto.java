@@ -39,7 +39,8 @@ public class MemberDto {
     //추가컬럼
     long totalCount;
     long seq;
-    
+
+    private LocalDateTime lastLoginDt;
     
     public static MemberDto of(Member member) {
         
@@ -61,7 +62,7 @@ public class MemberDto {
                 .zipcode(member.getZipcode())
                 .addr(member.getAddr())
                 .addrDetail(member.getAddrDetail())
-                
+                .lastLoginDt(member.getLastLoginDt())
                 .build();
     }
     

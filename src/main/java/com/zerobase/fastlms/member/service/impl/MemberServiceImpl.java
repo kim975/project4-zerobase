@@ -268,7 +268,18 @@ public class MemberServiceImpl implements MemberService {
         
         return new ServiceResult();
     }
-    
+
+    @Override
+    public boolean updateLastLoginDt(String userId) {
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException(userId));
+
+        member.setLastLoginDt(LocalDateTime.now());
+        memberRepository.save(member);
+
+        return true;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
