@@ -84,7 +84,7 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public List<BannerOutput> getDisplayBanner() {
 
-        return bannerRepository.findAllByOpenTypeAndOpenYnOrderByOrderNumberAsc(BannerOpenType.MAIN_PAGE, true)
+        return bannerRepository.findAllByOpenYnOrderByOrderNumberAsc(true)
                 .stream()
                 .map(BannerOutput::from)
                 .collect(Collectors.toList());

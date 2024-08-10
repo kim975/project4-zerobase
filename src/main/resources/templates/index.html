@@ -21,7 +21,7 @@
     <!--<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>-->
 
     <div class="slider">
-        <a th:each="x, index : ${list}" th:href="${x.linkUrl}">
+        <a th:each="x, index : ${list}" th:href="${x.linkUrl}" th:target="${x.openType}">
             <img th:src="${'/display?fileName=' + x.fileName}">
         </a>
     </div>

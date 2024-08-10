@@ -13,6 +13,7 @@ public class BannerDisplayDto {
 
         private String fileName;
         private String linkUrl;
+        private String openType;
 
     }
 

@@ -28,7 +28,7 @@ public class MainController {
 
         List<BannerDisplayDto.Response> bannerDisplayDtoList = bannerService.getDisplayBanner()
                 .stream()
-                .map(e -> new BannerDisplayDto.Response(e.getFileName(), e.getLinkUrl()))
+                .map(e -> new BannerDisplayDto.Response(e.getFileName(), e.getLinkUrl(), e.getOpenType().openType))
                 .collect(Collectors.toList());
 
         model.addAttribute("list", bannerDisplayDtoList);
