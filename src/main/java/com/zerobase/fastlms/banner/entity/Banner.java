@@ -32,7 +32,7 @@ public class Banner {
 
     private Boolean openYn;
 
-    private String fileFullPath;
+    private String fileName;
 
     @CreatedDate
     private LocalDateTime createDt;

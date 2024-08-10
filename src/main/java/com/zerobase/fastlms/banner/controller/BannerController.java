@@ -6,16 +6,23 @@ import com.zerobase.fastlms.banner.dto.BannerListDto;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
 import com.zerobase.fastlms.banner.service.BannerService;
 import com.zerobase.fastlms.course.controller.BaseController;
+import com.zerobase.fastlms.util.file.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,18 +66,13 @@ public class BannerController extends BaseController {
             @RequestPart MultipartFile file
     ) {
 
-        String fullPath = null;
-        if (!file.isEmpty()) {
-             fullPath = "D:\\zerobase\\project4-zerobase-file\\" + file.getOriginalFilename();
-            System.out.println("fullPath: " + fullPath);
-            try {
-                file.transferTo(new File(fullPath));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            FileUtils.storedFile(file);
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 저장 실패");
         }
 
-        bannerService.addBanner(request.toBannerInput(fullPath));
+        bannerService.addBanner(request.toBannerInput(file.getOriginalFilename()));
 
         return "redirect:/admin/banner/list";
     }

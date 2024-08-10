@@ -18,7 +18,7 @@ public class BannerOutput {
     private BannerOpenType openType;
     private Long orderNumber;
     private Boolean openYn;
-    private String fileFullPath;
+    private String fileName;
     private LocalDateTime createDt;
 
     //추가컬럼
@@ -33,7 +33,7 @@ public class BannerOutput {
                 .openType(banner.getOpenType())
                 .orderNumber(banner.getOrderNumber())
                 .openYn(banner.getOpenYn())
-                .fileFullPath(banner.getFileFullPath())
+                .fileName(banner.getFileName())
                 .createDt(banner.getCreateDt())
                 .build();
     }

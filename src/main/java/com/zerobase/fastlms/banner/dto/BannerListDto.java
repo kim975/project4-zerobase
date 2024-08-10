@@ -17,7 +17,7 @@ public class BannerListDto {
         private BannerOpenType openType;
         private Long orderNumber;
         private Boolean openYn;
-        private String fileFullPath;
+        private String fileName;
         private LocalDateTime createDt;
 
         //추가컬럼
@@ -32,7 +32,7 @@ public class BannerListDto {
                     .openType(bannerOutput.getOpenType())
                     .orderNumber(bannerOutput.getOrderNumber())
                     .openYn(bannerOutput.getOpenYn())
-                    .fileFullPath(bannerOutput.getFileFullPath())
+                    .fileName(bannerOutput.getFileName())
                     .createDt(bannerOutput.getCreateDt())
                     .totalCount(bannerOutput.getTotalCount())
                     .seq(bannerOutput.getSeq())

@@ -12,6 +12,7 @@
     <select id="selectList" resultType="com.zerobase.fastlms.banner.dto.BannerOutput">
         select *
         from banner
+        order by id desc
         limit #{pageStart}, #{pageEnd}
     </select>
 

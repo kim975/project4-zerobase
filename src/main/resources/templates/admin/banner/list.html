@@ -95,7 +95,8 @@
                 <a th:text="${x.title}" th:href="${'/admin/banner/modify?id=' + x.id}"></a>
             </td>
             <td>
-                <img th:src="${x.fileFullPath}">
+                <img th:if="${not #strings.isEmpty(x.fileName)}"
+                        th:src="${'/display?fileName=' + x.fileName}" width="100px" height="100px">
             </td>
             <td th:text="${#temporals.format(x.createDt, 'yyyy-MM-dd')}"></td>
         </tr>

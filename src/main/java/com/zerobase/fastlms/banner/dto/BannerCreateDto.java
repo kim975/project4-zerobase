@@ -14,14 +14,14 @@ public class BannerCreateDto {
         private Boolean openYn;
 
 
-        public BannerInput toBannerInput(String fileFullPath) {
+        public BannerInput toBannerInput(String fileName) {
             return BannerInput.builder()
                     .title(title)
                     .linkUrl(linkUrl)
                     .openType(openType)
                     .orderNumber(orderNumber)
                     .openYn(openYn)
-                    .fileFullPath(fileFullPath)
+                    .fileName(fileName)
                     .build();
         }
 

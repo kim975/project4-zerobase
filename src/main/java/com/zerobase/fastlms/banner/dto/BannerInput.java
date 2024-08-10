@@ -16,7 +16,7 @@ public class BannerInput {
     private BannerOpenType openType;
     private Long orderNumber;
     private Boolean openYn;
-    private String fileFullPath;
+    private String fileName;
 
     public Banner toEntity() {
         return Banner.builder()
@@ -25,7 +25,7 @@ public class BannerInput {
                 .openType(openType)
                 .orderNumber(orderNumber)
                 .openYn(openYn)
-                .fileFullPath(fileFullPath)
+                .fileName(fileName)
                 .build();
     }
 
