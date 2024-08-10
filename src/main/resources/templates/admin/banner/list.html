@@ -36,11 +36,13 @@
             font-weight: bold;
             color: red;
         }
+
         .display-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .left-img {
             margin-right: auto;
         }
@@ -56,7 +58,7 @@
     <div class="display-flex">
         <div class="left-img">
             <a href="/admin/banner/add"> 배너 등록 </a>
-            <a href="/admin/banner/remove"> 선택 삭제 </a>
+            <a href="javascript:bannerRemove()"> 선택 삭제 </a>
         </div>
         <div class="right-img">
             <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
@@ -67,7 +69,9 @@
         <thead>
         <tr>
             <th>
-                <input type="checkbox">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="allCheckBox" onclick="allChecked()">
+                </label>
             </th>
             <th>
                 NO
@@ -96,7 +100,7 @@
             </td>
             <td>
                 <img th:if="${not #strings.isEmpty(x.fileName)}"
-                        th:src="${'/display?fileName=' + x.fileName}" width="100px" height="100px">
+                     th:src="${'/display?fileName=' + x.fileName}" width="100px" height="100px">
             </td>
             <td th:text="${#temporals.format(x.createDt, 'yyyy-MM-dd')}"></td>
         </tr>
@@ -112,4 +116,74 @@
 
 
 </body>
+<script>
+    function allChecked() {
+        const checkbox = document.getElementById('allCheckBox');
+        const is_checked = checkbox.checked;
+        if (is_checked) {
+            chkAllChecked()
+        } else {
+            chkAllUnChecked()
+        }
+    }
+
+    function chkClicked() {
+        const allCount = document.querySelectorAll(".chk").length;
+
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+        const selectedElementsCnt = selectedElements.length;
+
+        if (allCount == selectedElementsCnt) {
+            document.getElementById('allCheckBox').checked = true;
+        } else {
+            document.getElementById('allCheckBox').checked = false;
+        }
+    }
+
+    function chkAllChecked() {
+        document.querySelectorAll(".chk").forEach(function (v, i) {
+            v.checked = true;
+        });
+    }
+
+    function chkAllUnChecked() {
+        document.querySelectorAll(".chk").forEach(function (v, i) {
+            v.checked = false;
+        });
+    }
+
+    function bannerRemove() {
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+
+        const selectedElementsCnt = selectedElements.length;
+
+        if (selectedElementsCnt == 0) {
+            alert("삭제할 항목을 선택해주세요.");
+            return false;
+        } else {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                const arr = new Array(selectedElementsCnt);
+
+                document.querySelectorAll('input[name="chk"]:checked').forEach(function (v, i) {
+                    arr[i] = v.value;
+                });
+
+                const form = document.createElement('form');
+                form.setAttribute('method', 'post');        //Post 메소드 적용
+                form.setAttribute('action', '/admin/banner/remove');
+
+                var input1 = document.createElement('input');
+                input1.setAttribute("type", "hidden");
+                input1.setAttribute("name", "idList");
+                input1.setAttribute("value", arr);
+                form.appendChild(input1);
+                console.log(form);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    }
+</script>
 </html>

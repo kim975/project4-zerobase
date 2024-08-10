@@ -69,4 +69,12 @@ public class BannerServiceImpl implements BannerService {
 
         return true;
     }
+
+    @Override
+    public boolean removeBanners(List<Long> idList) {
+
+        bannerRepository.deleteAllById(idList);
+
+        return true;
+    }
 }

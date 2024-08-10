@@ -109,7 +109,11 @@ public class BannerController extends BaseController {
     }
 
     @PostMapping("/admin/banner/remove")
-    public String removeBannerSubmit(Model model) {
+    public String removeBannerSubmit(
+            Model model,
+            @RequestParam List<Long> idList
+    ) {
+        bannerService.removeBanners(idList);
 
         return "redirect:/admin/banner/list";
     }
