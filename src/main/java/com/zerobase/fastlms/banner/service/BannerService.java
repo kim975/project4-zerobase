@@ -10,4 +10,8 @@ public interface BannerService {
     List<BannerOutput> bannerAllList(CommonParam param);
 
     boolean addBanner(BannerInput bannerInput);
+
+    BannerOutput findBanner(Long id);
+
+    boolean modifyBanner(BannerInput bannerInput);
 }

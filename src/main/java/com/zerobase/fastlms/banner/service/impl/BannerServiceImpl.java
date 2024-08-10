@@ -3,6 +3,7 @@ package com.zerobase.fastlms.banner.service.impl;
 import com.zerobase.fastlms.admin.model.CommonParam;
 import com.zerobase.fastlms.banner.dto.BannerInput;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
+import com.zerobase.fastlms.banner.entity.Banner;
 import com.zerobase.fastlms.banner.mapper.BannerMapper;
 import com.zerobase.fastlms.banner.repository.BannerRepository;
 import com.zerobase.fastlms.banner.service.BannerService;
@@ -39,6 +40,33 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public boolean addBanner(BannerInput bannerInput) {
         bannerRepository.save(bannerInput.toEntity());
+        return true;
+    }
+
+    @Override
+    public BannerOutput findBanner(Long id) {
+        Banner banner = bannerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Banner not found"));
+
+        return BannerOutput.from(banner);
+
+    }
+
+    @Override
+    public boolean modifyBanner(BannerInput bannerInput) {
+
+        Banner banner = bannerRepository.findById(bannerInput.getId())
+                .orElseThrow(() -> new RuntimeException("Banner not found"));
+
+        banner.setTitle(bannerInput.getTitle());
+        banner.setFileName(bannerInput.getFileName());
+        banner.setLinkUrl(bannerInput.getLinkUrl());
+        banner.setOpenType(bannerInput.getOpenType());
+        banner.setOpenYn(bannerInput.getOpenYn());
+        banner.setOrderNumber(bannerInput.getOrderNumber());
+
+        bannerRepository.save(banner);
+
         return true;
     }
 }

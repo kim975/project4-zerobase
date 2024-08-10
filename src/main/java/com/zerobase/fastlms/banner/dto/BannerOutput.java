@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 public class BannerOutput {
 
-    private Integer id;
+    private Long id;
     private String title;
     private String linkUrl;
     private BannerOpenType openType;

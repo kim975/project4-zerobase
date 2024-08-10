@@ -5,12 +5,11 @@ import com.zerobase.fastlms.banner.entity.BannerOpenType;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 public class BannerInput {
 
+    private Long id;
     private String title;
     private String linkUrl;
     private BannerOpenType openType;

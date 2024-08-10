@@ -3,6 +3,7 @@ package com.zerobase.fastlms.banner.controller;
 import com.zerobase.fastlms.admin.model.CommonParam;
 import com.zerobase.fastlms.banner.dto.BannerCreateDto;
 import com.zerobase.fastlms.banner.dto.BannerListDto;
+import com.zerobase.fastlms.banner.dto.BannerModifyDto;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
 import com.zerobase.fastlms.banner.service.BannerService;
 import com.zerobase.fastlms.course.controller.BaseController;
@@ -14,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -79,13 +77,33 @@ public class BannerController extends BaseController {
 
 
     @GetMapping("/admin/banner/modify")
-    public String modifyBanner(Model model) {
+    public String modifyBanner(
+            Model model,
+            @RequestParam Long id
+    ) {
+        model.addAttribute("banner", bannerService.findBanner(id));
 
         return "admin/banner/modify";
     }
 
     @PostMapping("/admin/banner/modify")
-    public String modifyBannerSubmit(Model model) {
+    public String modifyBannerSubmit(
+            Model model,
+            BannerModifyDto.Request request,
+            @RequestPart MultipartFile file
+    ) {
+
+        if (!file.isEmpty()) {
+            try {
+                FileUtils.storedFile(file);
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 저장 실패");
+            }
+
+            request.setFileName(file.getOriginalFilename());
+        }
+
+        bannerService.modifyBanner(request.toBannerInput());
 
         return "redirect:/admin/banner/list";
     }

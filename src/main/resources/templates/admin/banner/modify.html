@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+
+            $('#modifyForm').on('submit', function () {
+
+                if (!confirm('배너 정보를 수정하시겠습니까? ')) {
+                    return false;
+                }
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+<h1>배너관리 - 배너 등록</h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+<form id="modifyForm" method="post" enctype="multipart/form-data">
+    <table>
+        <tbody>
+        <input name="id" type="hidden" th:value="${banner.id}"/>
+        <tr>
+            <th>배너명</th>
+            <td>
+                <input type="text" name="title" th:value="${banner.title}" placeholder="배너명 입력" required/>
+            </td>
+        </tr>
+        <tr>
+            <th>배너파일</th>
+            <td>
+                <span th:text="${banner.fileName}"></span>
+                <input type="hidden" name="fileName" th:value="${banner.fileName}" />
+                <input type="file" name="file"/>
+            </td>
+        </tr>
+        <tr>
+            <th>링크주소</th>
+            <td>
+                <input type="text" name="linkUrl" th:value="${banner.linkUrl}" placeholder="링크 주소 입력"/>
+            </td>
+        </tr>
+        <tr>
+            <th>오픈방법</th>
+            <td>
+                <select name="openType" th:value="${banner.openType}">
+                    <option>오픈 방법 선택</option>
+                    <option th:each="openType : ${T(com.zerobase.fastlms.banner.entity.BannerOpenType).values()}"
+                            th:value="${openType}" th:text="${openType}"
+                            th:selected="${openType} == ${banner.openType}">
+
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>정렬순서</th>
+            <td>
+                <input type="number" name="orderNumber" th:value="${banner.orderNumber}" placeholder="정렬 순서 입력"
+                       required/>
+            </td>
+        </tr>
+        <tr>
+            <th>공개여부</th>
+            <td>
+                <input type="checkbox" name="openYn" th:checked="${banner.openYn}"/><span>공개</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <button type="submit">배너 수정 하기</button>
+        <a href="/admin/banner/list"> 목록 이동 </a>
+    </div>
+</form>
+</body>
+</html>

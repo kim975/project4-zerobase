@@ -11,7 +11,7 @@ public class BannerListDto {
     @Data
     @Builder
     public static class Response {
-        private Integer id;
+        private Long id;
         private String title;
         private String linkUrl;
         private BannerOpenType openType;
