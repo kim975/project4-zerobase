@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면</title>
+</head>
+<body>
+<h1>배너관리 - 배너 등록</h1>
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+<form method="post" enctype="multipart/form-data">
+    <table>
+        <tbody>
+        <tr>
+            <th>배너명</th>
+            <td>
+                <input type="text" name="title" placeholder="배너명 입력" required/>
+            </td>
+        </tr>
+        <tr>
+            <th>배너파일</th>
+            <td>
+                <input type="file" name="file"/>
+            </td>
+        </tr>
+        <tr>
+            <th>링크주소</th>
+            <td>
+                <input type="text" name="linkUrl" placeholder="링크 주소 입력"/>
+            </td>
+        </tr>
+        <tr>
+            <th>오픈방법</th>
+            <td>
+                <select name="openType">
+                    <option>오픈 방법 선택</option>
+                    <option th:each="openType : ${T(com.zerobase.fastlms.banner.entity.BannerOpenType).values()}"
+                            th:value="${openType}" th:text="${openType}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>정렬순서</th>
+            <td>
+                <input type="number" name="orderNumber" placeholder="정렬 순서 입력" required/>
+            </td>
+        </tr>
+        <tr>
+            <th>공개여부</th>
+            <td>
+                <input type="checkbox" name="openYn"/><span>공개</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <button type="submit">배너 등록 하기</button>
+        <a href="/admin/banner/list"> 목록 이동 </a>
+    </div>
+</form>
+</body>
+</html>

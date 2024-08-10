@@ -1,6 +1,7 @@
 package com.zerobase.fastlms.banner.service.impl;
 
 import com.zerobase.fastlms.admin.model.CommonParam;
+import com.zerobase.fastlms.banner.dto.BannerInput;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
 import com.zerobase.fastlms.banner.mapper.BannerMapper;
 import com.zerobase.fastlms.banner.repository.BannerRepository;
@@ -33,5 +34,11 @@ public class BannerServiceImpl implements BannerService {
         }
 
         return bannerOutputList;
+    }
+
+    @Override
+    public boolean addBanner(BannerInput bannerInput) {
+        bannerRepository.save(bannerInput.toEntity());
+        return true;
     }
 }

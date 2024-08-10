@@ -1,6 +1,7 @@
 package com.zerobase.fastlms.banner.controller;
 
 import com.zerobase.fastlms.admin.model.CommonParam;
+import com.zerobase.fastlms.banner.dto.BannerCreateDto;
 import com.zerobase.fastlms.banner.dto.BannerListDto;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
 import com.zerobase.fastlms.banner.service.BannerService;
@@ -10,7 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +53,24 @@ public class BannerController extends BaseController {
     }
 
     @PostMapping("/admin/banner/add")
-    public String addBannerSubmit(Model model) {
+    public String addBannerSubmit(
+            Model model,
+            BannerCreateDto.Request request,
+            @RequestPart MultipartFile file
+    ) {
+
+        String fullPath = null;
+        if (!file.isEmpty()) {
+             fullPath = "D:\\zerobase\\project4-zerobase-file\\" + file.getOriginalFilename();
+            System.out.println("fullPath: " + fullPath);
+            try {
+                file.transferTo(new File(fullPath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        bannerService.addBanner(request.toBannerInput(fullPath));
 
         return "redirect:/admin/banner/list";
     }
