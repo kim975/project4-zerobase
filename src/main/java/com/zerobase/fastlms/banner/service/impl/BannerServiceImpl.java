@@ -4,6 +4,7 @@ import com.zerobase.fastlms.admin.model.CommonParam;
 import com.zerobase.fastlms.banner.dto.BannerInput;
 import com.zerobase.fastlms.banner.dto.BannerOutput;
 import com.zerobase.fastlms.banner.entity.Banner;
+import com.zerobase.fastlms.banner.entity.BannerOpenType;
 import com.zerobase.fastlms.banner.mapper.BannerMapper;
 import com.zerobase.fastlms.banner.repository.BannerRepository;
 import com.zerobase.fastlms.banner.service.BannerService;
@@ -11,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,5 +79,14 @@ public class BannerServiceImpl implements BannerService {
         bannerRepository.deleteAllById(idList);
 
         return true;
+    }
+
+    @Override
+    public List<BannerOutput> getDisplayBanner() {
+
+        return bannerRepository.findAllByOpenTypeAndOpenYnOrderByOrderNumberAsc(BannerOpenType.MAIN_PAGE, true)
+                .stream()
+                .map(BannerOutput::from)
+                .collect(Collectors.toList());
     }
 }

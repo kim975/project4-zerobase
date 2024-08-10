@@ -16,4 +16,6 @@ public interface BannerService {
     boolean modifyBanner(BannerInput bannerInput);
 
     boolean removeBanners(List<Long> idList);
+
+    List<BannerOutput> getDisplayBanner();
 }
