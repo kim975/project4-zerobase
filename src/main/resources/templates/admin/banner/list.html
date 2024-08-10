@@ -36,6 +36,15 @@
             font-weight: bold;
             color: red;
         }
+        .display-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .left-img {
+            margin-right: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -44,10 +53,14 @@
 
 <div class="list">
 
-    <div class="search-form">
-        <a href="/admin/banner/add"> 배너 등록 </a>
-        <a href="/admin/banner/remove"> 선택 삭제 </a>
-        <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
+    <div class="display-flex">
+        <div class="left-img">
+            <a href="/admin/banner/add"> 배너 등록 </a>
+            <a href="/admin/banner/remove"> 선택 삭제 </a>
+        </div>
+        <div class="right-img">
+            <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
+        </div>
     </div>
 
     <table>
